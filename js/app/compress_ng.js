@@ -1,7 +1,7 @@
 /**
  * Created by kayode on 7/7/2016.
  */
-var file = angular.module('file', []);
+var file = angular.module('compressNg', []);
 file.factory('$file', function () {
     var $fileList = [],
         $fileSrc = [],

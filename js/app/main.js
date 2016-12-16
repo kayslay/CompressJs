@@ -2,7 +2,7 @@
  * Created by new on 6/3/2016.
  */
 
-var app = angular.module("compressImg", ['file']);
+var app = angular.module("compressImg", ['compressNg']);
 
 
 app.controller('name', function ($scope, $file) {
