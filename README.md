@@ -24,6 +24,7 @@ Make sure it's added to your Angular apps module
 
 Inject as a dependency to your controller
 ####Example
+
 ```javascript
 appName.controller('name', function ($scope, $file) {
    var elem = document.querySelector('input#file');
