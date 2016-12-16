@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="compressImg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keyword" content="compress,images,javascript,compression">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Compress images</title>
+    <link rel="stylesheet" href="lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/css/mdb.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-material-design-icons/css/material-icons.min.css">
+    <link rel="stylesheet" href="lib/font-awesome-4.6.3/css/font-awesome.min.css">
+
+
+</head>
+<body>
+<!--Navbar-->
+
+<!--/.Navbar-->
+<div ng-controller="name" class="container-all row card-group" style="padding-top: 70px;">
+
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="original card">
+                <img src="{{src}}" id="oriImg" alt="" fileimg class="img-fluid" width="100%">
+                <div class="card-block">
+                        <h3>ORIGINAL IMAGE</h3>
+
+                        <label>
+                            <input type="file" name="file" id="file" style="display: none">
+                            <span class="btn btn-primary"><span class="glyphicon glyphicon-file">
+                    </span>   Select Image</span>
+                        </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="compressed card " style="margin-left: 0px;">
+                <img src="{{comp}}" alt="" class="img-fluid" width="100%">
+                <div class="card-block">
+
+
+                        <h3 class="card-title">COMPRESSED IMAGE</h3>
+                        <h5 class="card-text" style="word-wrap: break-word;">{{download}}</h5>
+
+                        <div class="">
+                            <input class="col-xs-12 col-lg-12 col-sm-12 col-md-12" type="range" max="80" ng-model="rate"
+                                   ng-change="compress()"></div>
+                        <div class=" upload-form">
+                            <a id="download" class="btn btn-primary" download="{{download}}"><span
+                                    class=""></span><span>   download</span></a></div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+</div>
+<!--<canvas id="canvas" width="300", height="300"></canvas>-->
+<script src="lib/js/jquery-2.2.3.min.js"></script>
+<script src="lib/js/tether.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<script src="lib/js/mdb.min.js"></script>
+<script src="js/libs/ng/angular.js"></script>
+<script src="js/app/main.js"></script>
+<script src="js/app/compress_ng.js"></script>
+
+</body>
+</html>

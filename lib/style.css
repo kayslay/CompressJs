@@ -1,0 +1,23 @@
+.profile-info {
+    height: 600px;
+}
+
+.page-pic-container {
+    height: 30%;
+    overflow: hidden;
+    position: relative;
+}
+
+.profile-pics {
+    position: absolute;
+    bottom: 15%;
+    width: 30%;
+    left: 35%;
+    z-index: 11;
+}
+
+.page-pic-container > span {
+    position: absolute;
+    right: 0;
+
+}
