@@ -26,16 +26,18 @@ Make sure it's added to your Angular apps module
 
 Inject as a dependency to your controller
 ####Example
-        appName.controller('name', function ($scope, $file) {
-        var elem = document.querySelector('input#file');
-        //initialize file withe the scope and the input file as parameters
-        window.files = $file.init($scope, elem);
-        $scope.dimension = {'width': 100, 'height': 100};
-            $scope.compress = function () {
-                $file.compress($file.imgTag, $scope.dimension);
-            };
-         //code
-         }
+
+```appName.controller('name', function ($scope, $file) {
+   var elem = document.querySelector('input#file');
+ //initialize file withe the scope and the input file as parameters
+ window.files = $file.init($scope, elem);
+ $scope.dimension = {'width': 100, 'height': 100};
+  $scope.compress = function () {
+ $file.compress($file.imgTag, $scope.dimension);
+  };
+ //code
+ }
+```
 the scope of the controller must contain this properties
     rate ($scope.rate)-> the rate of the compression
     src ($scope.src)-> the image of the the origninal file
