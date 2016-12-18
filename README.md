@@ -7,10 +7,11 @@ CompressJs is not dependent on any script, just use it
 CompressJs can be downloaded from the CompressJs github repo (https://github.com/kayslay/CompressJs).
 
 ##Demo and Tutorial
-open comp.html to see alive example of the library
+open demo/comp.html to see alive example of the library
 
 ###Hello World(Quick example)
-_script/main.js_
+create a javascript file . let's say main.js.
+_main.js_
 ```javascript
        
 //run the default fn
@@ -29,3 +30,15 @@ _script/main.js_
 ```
         
  _index.html_
+
+ ```html
+
+ <div id="first_test">
+     <img src="" alt="" id="img">
+     <input type="file" name="file" id="input_cmprss">
+     <a href="" download="file" id="comp_download">download</a>
+     <input type="range" min="0" max="10" id="slider">
+
+ </div>
+     <script src="../js/app/compress.js"></script>
+ ```
