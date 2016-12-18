@@ -11,19 +11,21 @@ open comp.html to see alive example of the library
 
 ###Hello World(Quick example)
 _script/main.js_
-       ```javascript
-            //run the default fn
-         var comp = new Compress({
-            changeFn: function (e, file) {
-                comp.compress();
-            },
-            rateSelector: "#slider",
-            rateFn: function (e){
-                var target = e.target;
-                this.option.rate = parseInt(target.value)
-                this.compress();
-            }
-        });
-        comp.option.downloadSelector = "#comp_download"; // set the downolad button selector
-        ```
+```javascript
+       
+//run the default fn
+    var comp = new Compress({
+        changeFn: function (e, file) {
+            comp.compress();
+        },
+        rateSelector: "#slider",
+        rateFn: function (e) {
+            var target = e.target;
+            this.option.rate = parseInt(target.value)
+            this.compress();
+        }
+    });
+    comp.option.downloadSelector = "#comp_download"; // set the downolad button selector
+```
+        
  _index.html_
