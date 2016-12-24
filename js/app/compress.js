@@ -70,7 +70,8 @@
                 this.option.changeFn(e, this.files);
             }
         },
-
+//not in use for now
+        //Todo: make use of this
         drop: function (e) {
             this.files = Array.prototype.slice.call(e.target.files);
             //fire the changeFn if set
@@ -82,9 +83,9 @@
     };
 
     //endregion
-// sers the event listeners to the input element
+// sets the event listeners to the input element
     var setEvent = function () {
-        var input = document.querySelector(this.option.inputSelector);
+        var input = document.querySelectorAll(this.option.inputSelector)[0];
         for (var event in eventListeners) {
             input.addEventListener(event, eventListeners[event].bind(this))
         }
@@ -101,28 +102,25 @@
      * @param src the src of the compressed file
      */
     function defaultCompressFn(src) {
-        var compImgName = comp.option.imagePrefix + comp.files[0].name.replace(/\..+/, '');
-        createLink(src, compImgName, this.option.downloadSelector); // the context of this is from the instance of Compress
-        function createLink(link, name, selector) {
-            //TODO:remove after development
-            document.querySelector("#img").src = link;
-            document.querySelector(selector).download = name;
-            return document.querySelector(selector).href = link;
-        }
+       console.log('compressed file ')
     }
 
+//the default rateFn
     function defaultRateFn(e) {
         var target = e.target;
         this.option.rate = parseInt(target.value)
     }
 
     /**
-     *an object literal containing the default config for the
+     *An object literal containing the default config for the
      * compress object
-     *the allowed options
+     *The allowed options
+     * -----------------------------------------------------------------------
      * inputSelector: the selector of the input element
      *
      * downloadSelector: the selector of the link used to download the image
+     *
+     * imageSelector:
      *
      * changeFn: function that is fired when the change event is fired on the input
      *
@@ -131,22 +129,31 @@
      * rate: the rate of compression the lower the value, the higher the compression.
      *       the rate is between 0 - 100
      *
-     * imagePrefix: if u are using the defaultCompressFn for the compressFn.
-     *              this must be set to create a default name for thre image
+     * imagePrefix: the prefix of the compressed image name
      *
-     *dimen: the dimension of the compressed image. if not set it uses the dimention of the image
-     *         dimen is a Object literal of this format: {width:{number},height:{number}}
+     *dimen: the width and height of the compressed image.
+     *
+     *compressFn: function called when the compression as compressed
+     *
+     * >>>the rate selector,Fn and event must be set on the creation of the Compress Object<<<
+     * ----------------------------------------------------------------------------------------------
+     * rateSelector: the selector that control's the rate of compression
+     *
+     * rateEvent: the event type that is fired to change the rate
+     *
+     * rateFn: the function tht is called by the
      */
     var option = {
         inputSelector: '#input_cmprss',
-        downloadSelector: null,
+        downloadSelector: '#comp_download',
+        imageSelector: '#comp_img',
         changeFn: null,
         dropFn: null,
         rate: 20,
-        imagePrefix: 'comp-',
+        imagePrefix: 'compressed-',
         dimen: null,
         compressFn: defaultCompressFn,
-        rateSelector: null,
+        rateSelector: '#comp_rate',
         rateEvent: 'change',
         rateFn: defaultRateFn
     };
@@ -174,6 +181,7 @@
         setEvent.call(this);
     };
 
+
     /**
      * @private
      *this call the returnCompressLink, that creates the the compressed image
@@ -189,6 +197,13 @@
             this.option.compressFn.call(this, this.compSrc)
         }
     }
+
+    function download() {
+        var a = this.link || document.createElement('a');
+        a.download = this.option.imagePrefix + this.files[0].name.replace(/\..+/, '');
+         a.href = this.compSrc;
+         a.click();
+    };
 
     /**
      * this is where the compression of the image takes place.
@@ -218,6 +233,7 @@
      * compresses the image. makes a call to the createCompressed private method
      * the creaeCompressed method is called when the FileReader result as loaded
      *
+     *
      * @public
      *
      */
@@ -238,7 +254,8 @@
     Compress.prototype = {
         constructor: Compress,
         version: '0.0.1',
-        compress: compress
+        compress: compress,
+        download: download
     };
 //static property canvas
     var canvas = document.createElement('canvas');

@@ -1,68 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="compressImg">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="keyword" content="compress,images,javascript,compression">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Compress images</title>
-    <link rel="stylesheet" href="../lib/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../lib/css/mdb.min.css">
-    <link rel="stylesheet" href="../lib/bootstrap-material-design-icons/css/material-icons.min.css">
-    <link rel="stylesheet" href="../lib/font-awesome-4.6.3/css/font-awesome.min.css">
+    <meta>
+    <title>Compress 0.0.1</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/MDBootstrap/css/mdb.min.css">
+    <style>
+        #input_cmprss {
+            display: none;
+        }
 
+        #comp_rate {
+            width: 90%;
+        }
+
+        #first_test {
+            margin-top: 10%;
+        }
+    </style>
+    <script src="../js/app/compress.js"></script>
 
 </head>
 <body>
-<!--Navbar-->
-
-<!--/.Navbar-->
-<div ng-controller="name" class="container-all row card-group" style="padding-top: 70px;">
-
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
-            <div class="original card">
-                <img src="{{src}}" id="oriImg" alt="" fileimg class="img-fluid" width="100%">
-                <div class="card-block">
-                        <h3>ORIGINAL IMAGE</h3>
-
-                        <label>
-                            <input type="file" name="file" id="file" style="display: none">
-                            <span class="btn btn-primary"><span class="glyphicon glyphicon-file">
-                    </span>   Select Image</span>
-                        </label>
-                </div>
-            </div>
+<div class="row grey">
+    <h2>CompressJs</h2>
+    <div class="card col-lg-6 col-md-6 push-lg-3 push-md-3 " id="first_test">
+        <div class="card-img">
+            <img src="" alt="" id="comp_img" class="img-fluid">
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
-            <div class="compressed card " style="margin-left: 0px;">
-                <img src="{{comp}}" alt="" class="img-fluid" width="100%">
-                <div class="card-block">
-
-
-                        <h3 class="card-title">COMPRESSED IMAGE</h3>
-                        <h5 class="card-text" style="word-wrap: break-word;">{{download}}</h5>
-
-                        <div class="">
-                            <input class="col-xs-12 col-lg-12 col-sm-12 col-md-12" type="range" max="80" ng-model="rate"
-                                   ng-change="compress()"></div>
-                        <div class=" upload-form">
-                            <a id="download" class="btn btn-primary" download="{{download}}"><span
-                                    class=""></span><span>   download</span></a></div>
-
-                </div>
-
+        <div class="card-block">
+            <div class="btn-group col-lg-12 col-md-12">
+                <label class="btn btn-primary" style="width: 60%">
+                    <span style="width: 50%">select an image</span>
+                    <input type="file" name="file" id="input_cmprss">
+                </label>
+                <a href="" download="file" id="comp_download" class="btn btn-primary">download</a>
             </div>
+            <div class="">
+                <input type="range" min="0" max="100" id="comp_rate">
+            </div>
+
         </div>
-
-
+    </div>
 </div>
-<!--<canvas id="canvas" width="300", height="300"></canvas>-->
-<script src="../lib/js/jquery-2.2.3.min.js"></script>
-<script src="../lib/js/tether.min.js"></script>
-<script src="../lib/js/bootstrap.min.js"></script>
-<script src="../lib/js/mdb.min.js"></script>
-<script src="../js/libs/ng/angular.js"></script>
-<script src="../js/app/main.js"></script>
-<script src="../js/app/compress_ng.js"></script>
 
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/tether/dist/js/tether.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/MDBootstrap/js/mdb.min.js"></script>
+
+
+<script>
+
+    var comp = new Compress({
+        changeFn: function (e, file) {
+            comp.compress();
+        },
+        rateFn: function (e) {
+            var target = e.target;
+            this.option.rate = parseInt(target.value);
+            this.compress();
+        }
+    });
+    comp.option.downloadSelector = "#comp_download";
+
+
+</script>
 </body>
 </html>

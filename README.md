@@ -3,11 +3,11 @@ CompressJs is a library that compresses png and jpeg images to smaller jpeg imag
 
 ##Dependencies
 CompressJs is not dependent on any script, just use it
-##Instalation
+##Installation
 CompressJs can be downloaded from the CompressJs github repo (https://github.com/kayslay/CompressJs).
 
 ##Demo and Tutorial
-open demo/comp.html to see alive example of the library
+open demo/index.html to see alive example of the library
 
 ###Hello World(Quick example)
 create a javascript file . let's say main.js.
@@ -42,3 +42,18 @@ _main.js_
  </div>
      <script src="../js/app/compress.js"></script>
  ```
+Then run the index file on your browser. It's that easy
+
+##Compress.option
+
+The Compress option is the configuration of the Compress Object instance. the Compress.optionis an Object Literal that contains properties
+used to set the behaviour of the Compress.
+
+###The Properties of Compress.option
+
+ - **inputSelector** :: this is the selector of the input element thst selects the image. For now, Compress support's one
+    input per Compress Object instance. It's takes the first of the selectors.
+ - **downloadSelector** :: this is the selector of the link that would be used to download the compressed image. For now, Compress support's one
+     link per Compress Object instance. It's takes the first of the selectors.
+ - **imageSelector** :: this is the selector for the img tag that's used to preview the compressed image. For now, Compress support's one
+      img tag per Compress Object instance. It's takes the first of the selectors.

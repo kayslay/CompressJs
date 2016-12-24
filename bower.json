@@ -1,0 +1,22 @@
+{
+  "name": "compressjs",
+  "description": "compress jpeg and png images",
+  "main": "./js/app/compress.js",
+  "keywords": [
+    "compress",
+    "image",
+    "compression",
+    "compression",
+    "compressJs"
+  ],
+  "authors": [
+    "badewa kayode"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "MDBootstrap": "4.2.0",
+    "jquery": "2.2.3",
+    "FortAwesome/Font-Awesome": "*"
+  }
+}
