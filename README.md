@@ -1,10 +1,17 @@
 #CompresJs
-CompressJs is a library that compresses png and jpeg images to smaller jpeg images.
+CompressJs is a library that compresses png and jpeg images to smaller jpeg images. CompressJs fully supports jpeg image compression.
+For other image file they would be converted to jpeg images.
+In PNG images, it compresses but changes the image type to jpeg, and if the file has transparent parts they would be converted to black blank area's.
+In GIF images,  it compresses but changes the image type to jpeg that contains only the first part of the gif
 
 ##Dependencies
 CompressJs is not dependent on any script, just use it
 ##Installation
 CompressJs can be downloaded from the CompressJs github repo (https://github.com/kayslay/CompressJs).
+
+
+###bower
+
 
 ##Demo and Tutorial
 open demo/index.html to see alive example of the library
@@ -54,6 +61,7 @@ used to set the behaviour of the Compress.
  - **inputSelector** :: this is the selector of the input element thst selects the image. For now, Compress support's one
     input per Compress Object instance. It's takes the first of the selectors.
  - **downloadSelector** :: this is the selector of the link that would be used to download the compressed image. For now, Compress support's one
-     link per Compress Object instance. It's takes the first of the selectors.
+     link per Compress Object instance. It's takes the first of the selectors. downloadSelector must be set on creation of the Compress Object.
+
  - **imageSelector** :: this is the selector for the img tag that's used to preview the compressed image. For now, Compress support's one
       img tag per Compress Object instance. It's takes the first of the selectors.

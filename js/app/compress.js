@@ -101,7 +101,7 @@
      * it take a single parameter - the source of the compressed image
      * @param src the src of the compressed file
      */
-    function defaultCompressFn(src) {
+    function defaultCompressFn() {
        console.log('compressed file ')
     }
 
@@ -192,12 +192,13 @@
      */
     function createCompressed(src, dimension) {
         this.compSrc = returnCompressedLink.call(this, src, dimension);
-        //download section
+        //if the compressFn is set call it
         if (this.option.compressFn) {
             this.option.compressFn.call(this, this.compSrc)
         }
     }
 
+    //download the compressed image
     function download() {
         var a = this.link || document.createElement('a');
         a.download = this.option.imagePrefix + this.files[0].name.replace(/\..+/, '');
@@ -253,7 +254,7 @@
 //the prototype of the Compress class
     Compress.prototype = {
         constructor: Compress,
-        version: '0.0.1',
+        version: 'v0.1',
         compress: compress,
         download: download
     };
