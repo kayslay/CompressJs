@@ -32,7 +32,7 @@
 })(typeof window !== undefined ? window : this, function (global) {
     //utils
     /**
-     *extend's the properties of the target object from the suource object
+     *extend's the properties of the target object from the source object
      *
      * @param target {Object} the target to extend
      * @param source {...Object} the sources to extend from
@@ -59,7 +59,8 @@
 
     //region EventListeners
     /**
-     *
+     *this object contain the event type and the handlers that control's the event
+     * the event types are the keys, while the event handlers are the methods
      *
      */
     var eventListeners = {
@@ -73,11 +74,25 @@
 //not in use for now
         //Todo: make use of this
         drop: function (e) {
-            this.files = Array.prototype.slice.call(e.target.files);
+            e.preventDefault();
+            e.stopPropagation();
+            this.files = Array.prototype.slice.call(e.dataTransfer.files);
             //fire the changeFn if set
             if (this.option.dropFn) {
                 this.option.dropFn(e, this.files);
             }
+        },
+        dragenter: function (e) {
+            e.preventDefault();
+            console.log('drag entered');
+        },
+        dragover: function (e) {
+            e.preventDefault();
+            console.log('drag entered');
+        },
+        dragleave: function (e) {
+            e.preventDefault();
+            console.log('drag entered');
         }
 
     };
@@ -87,7 +102,10 @@
     var setEvent = function () {
         var input = document.querySelectorAll(this.option.inputSelector)[0];
         for (var event in eventListeners) {
-            input.addEventListener(event, eventListeners[event].bind(this))
+            input.addEventListener(event, eventListeners[event].bind(this));
+            if (this.option.dropSelector && event !== "click") {
+                document.querySelectorAll(this.option.dropSelector)[0].addEventListener(event, eventListeners[event].bind(this));
+            }
         }
         if (this.option.rateSelector) {
             var rateElem = document.querySelectorAll(this.option.rateSelector)[0];
@@ -102,7 +120,12 @@
      * @param src the src of the compressed file
      */
     function defaultCompressFn(src) {
-       console.log('compressed file ')
+        this.view();
+        console.log('compressed file ')
+    }
+
+    function viewImg() {
+        document.querySelectorAll(this.option.imageSelector)[0].src = this.compSrc;
     }
 
 //the default rateFn
@@ -149,7 +172,8 @@
         imageSelector: '#comp_img',
         changeFn: null,
         dropFn: null,
-        rate: 20,
+        dropSelector: null,
+        rate: 50,
         imagePrefix: 'compressed-',
         dimen: null,
         compressFn: defaultCompressFn,
@@ -192,17 +216,18 @@
      */
     function createCompressed(src, dimension) {
         this.compSrc = returnCompressedLink.call(this, src, dimension);
-        //download section
+        //if the compressFn is set call it
         if (this.option.compressFn) {
             this.option.compressFn.call(this, this.compSrc)
         }
     }
 
+    //download the compressed image
     function download() {
         var a = this.link || document.createElement('a');
         a.download = this.option.imagePrefix + this.files[0].name.replace(/\..+/, '');
-         a.href = this.compSrc;
-         a.click();
+        a.href = this.compSrc;
+        a.click();
     };
 
     /**
@@ -253,9 +278,11 @@
 //the prototype of the Compress class
     Compress.prototype = {
         constructor: Compress,
-        version: '0.0.1',
+        version: 'v0.1',
         compress: compress,
-        download: download
+        download: download,
+        view: viewImg
+
     };
 //static property canvas
     var canvas = document.createElement('canvas');

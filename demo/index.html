@@ -30,9 +30,9 @@
             <img src="" alt="" id="comp_img" class="img-fluid">
         </div>
         <div class="card-block">
-            <div class="btn-group col-lg-12 col-md-12">
-                <label class="btn btn-primary" style="width: 60%">
-                    <span style="width: 50%">select an image</span>
+            <div class="btn-group col-lg-12 col-md-12" >
+                <label class="btn btn-primary"  style="width: 60%">
+                    <span style="width: 50%" id="comp_file_selector">select an image</span>
                     <input type="file" name="file" id="input_cmprss">
                 </label>
                 <a href="" download="file" id="comp_download" class="btn btn-primary">download</a>
@@ -57,11 +57,15 @@
         changeFn: function (e, file) {
             comp.compress();
         },
+        dropFn: function (e,file) {
+            comp.compress();
+        },
         rateFn: function (e) {
             var target = e.target;
             this.option.rate = parseInt(target.value);
             this.compress();
-        }
+        },
+        dropSelector: "#comp_file_selector"
     });
     comp.option.downloadSelector = "#comp_download";
 
