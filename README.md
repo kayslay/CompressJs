@@ -1,17 +1,16 @@
 #CompresJs
-CompressJs is a library that compresses png and jpeg images to smaller jpeg images. CompressJs fully supports jpeg image compression.
-For other image file they would be converted to jpeg images.
-In PNG images, it compresses but changes the image type to jpeg, and if the file has transparent parts they would be converted to black blank area's.
-In GIF images,  it compresses but changes the image type to jpeg that contains only the first part of the gif
+CompressJs is a library that compresses png and jpeg images to smaller jpeg images. CompressJs fully supports jpeg image compression, other image file they would be converted to jpeg images.
+For PNG images, it compresses but changes the image type to jpeg, and if the file has transparent parts they would be converted to black blank area's.
+For GIF images,  it compresses but changes the image type to jpeg that contains only the first part of the gif
 
 ##Dependencies
-CompressJs is not dependent on any script, just use it
+CompressJs is not dependent on any script, just use it.
 ##Installation
 CompressJs can be downloaded from the CompressJs github repo (https://github.com/kayslay/CompressJs).
 
 
 ###bower
-
+bower install compressJs --save
 
 ##Demo and Tutorial
 open demo/index.html to see alive example of the library
@@ -58,10 +57,16 @@ used to set the behaviour of the Compress.
 
 ###The Properties of Compress.option
 
- - **inputSelector** :: this is the selector of the input element thst selects the image. For now, Compress support's one
-    input per Compress Object instance. It's takes the first of the selectors.
- - **downloadSelector** :: this is the selector of the link that would be used to download the compressed image. For now, Compress support's one
-     link per Compress Object instance. It's takes the first of the selectors. downloadSelector must be set on creation of the Compress Object.
-
- - **imageSelector** :: this is the selector for the img tag that's used to preview the compressed image. For now, Compress support's one
-      img tag per Compress Object instance. It's takes the first of the selectors.
+ - **inputSelector** :: this is the selector of the input element thst selects the image.
+ - **downloadSelector** :: this is the selector of the link that would be used to download the compressed image. downloadSelector must be set on creation of the Compress Object.
+ - **imageSelector** :: this is the selector for the img tag that's used to preview the compressed image.
+ - **changeFn** :: the function to be called when the input is changed.
+ - **dropFn**  :: the function to be called when there is a drop on the input o the dropSelector.
+ - **dropSelector** :: the selector of the elemnt to drop the image for compression.
+ - **rate** :: the default rate at which the image is compressed. the lower the rate the higher the compression.
+ - **imagePrefix** :: the prefix to the name of the compressed file when downloaded.
+ - **dimen**: : an object literal holding the width and height of the compressed image.
+ - **compressFn** :: the function to be called as soon as comression is complete
+ - **rateSelector** :: the selctor of the element used to control the rate of compression
+ - **rateEvent** :: the event fired that call the rateFn
+ - **rateFn** :: the function that changes the rate of the compression
