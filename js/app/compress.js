@@ -111,6 +111,13 @@
             var rateElem = document.querySelectorAll(this.option.rateSelector)[0];
             rateElem.addEventListener(this.option.rateEvent, this.option.rateFn.bind(this));
         }
+        if (this.option.downloadSelector){
+            var downloadElem = document.querySelectorAll(this.option.downloadSelector)[0];
+            downloadElem.addEventListener('click',function(e){
+                e.preventDefault();
+                this.download()
+            }.bind(this));
+        }
         console.log(this)
     };
 
