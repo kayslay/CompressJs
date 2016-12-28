@@ -2,48 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Compress 0.0.1</title>
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../bower_components/MDBootstrap/css/mdb.min.css">
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-        #input_cmprss {
-            display: none;
-        }
 
-        #comp_rate {
-            width: 90%;
-        }
-
-        #first_test {
-            margin-top: 10%;
-        }
     </style>
     <script src="../js/app/compress.js"></script>
 
+
 </head>
 <body>
-<div class="row grey">
-    <h2>CompressJs</h2>
-    <div class="card col-lg-6 col-md-6 push-lg-3 push-md-3 " id="first_test">
-        <div class="card-img">
-            <img src="" alt="" id="comp_img" class="img-fluid">
-        </div>
-        <div class="card-block">
-            <div class="btn-group col-lg-12 col-md-12" >
-                <label class="btn btn-primary"  style="width: 60%">
-                    <span style="width: 50%" id="comp_file_selector">select an image</span>
-                    <input type="file" name="file" id="input_cmprss">
-                </label>
-                <a href="" download="file" id="comp_download" class="btn btn-primary">download</a>
+<div class="row comp_container">
+
+    <!--Navbar-->
+    <nav class="navbar navbar-dark bg-primary">
+
+        <!-- Collapse button-->
+        <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#collapseEx2">
+            <i class="fa fa-bars"></i>
+        </button>
+
+        <div class="container">
+
+            <!--Collapse content-->
+            <div class="collapse navbar-toggleable-xs" id="collapseEx2">
+                <!--Navbar Brand-->
+                <a class="navbar-brand">CompressJs</a>
+                <!--Links-->
+                <ul class="nav navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/kayslay/CompressJs"  class="nav-link">Docs</a>
+                    </li>
+                    <li class="nav-item btn-group">
+                        <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contact Developers</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <a href="https://www.facebook.com/badewa.kayode" class="dropdown-item"><span class="fa fa-facebook"></span>    /badewakayode</a>
+                            <a class="dropdown-item"><span class="fa fa-twitter"></span> @kayslay</a>
+                            <a href="https://github.com/kayslay/" class="dropdown-item"><span class="fa fa-github"></span> @kayslay</a>
+                            <a href="https://github.com/gbenga504/" class="dropdown-item"><span class="fa fa-github"></span> @gbenga504</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="">
-                <input type="range" min="0" max="100" id="comp_rate">
-            </div>
+            <!--/.Collapse content-->
 
         </div>
+
+    </nav>
+    <!--/.Navbar-->
+
+    <div class="card col-sm-12 col-xs-12 col-lg-10 col-md-10 push-lg-1 push-md-1 comp_img_container">
+        <div class="img-con"><img src="" alt="" id="comp_img" class="img-fluid"></div>
+        <div class="btn-group" id="controls">
+            <label class="btn btn-primary" title="select an image (jpeg, png)">
+                <span id="comp_file_selector"><span class="fa fa-image"></span></span>
+                <input type="file" name="file" id="input_cmprss">
+            </label>
+            <a href="" download="file" id="comp_download" class="btn btn-primary">download</a>
+        </div>
+    </div>
+    <div class="card col-sm-12 col-xs-12 col-lg-10 col-md-10 push-lg-1 push-md-1">
+        <div class="card-block rate_container">
+            <input type="range" min="0" max="80" id="comp_rate"></div>
     </div>
 </div>
+
 
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/tether/dist/js/tether.min.js"></script>
@@ -57,7 +87,7 @@
         changeFn: function (e, file) {
             comp.compress();
         },
-        dropFn: function (e,file) {
+        dropFn: function (e, file) {
             comp.compress();
         },
         rateFn: function (e) {

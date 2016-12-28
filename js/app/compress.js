@@ -118,7 +118,6 @@
                 this.download()
             }.bind(this));
         }
-        console.log(this)
     };
 
     /**
@@ -258,7 +257,9 @@
             height = canvas.height = img2.height;
         }
         context.drawImage(img2, 0, 0, width, height);
-        return (canvas.toDataURL("image/jpeg", (this.option.rate / 100)));
+        return (canvas.toDataURL("image/jpeg", (this.option.rate / 120))); // dividing by 120 to prevent an error that
+        // occurs when the rate is close to maximum
+        //
     }
 
     /**
