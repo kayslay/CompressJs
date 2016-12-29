@@ -2,6 +2,7 @@
   "name": "compressjs",
   "description": "compress jpeg and png images",
   "main": "./js/app/compress.js",
+  "version": "1.0.0",
   "keywords": [
     "compress",
     "image",
