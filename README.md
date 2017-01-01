@@ -10,7 +10,7 @@ CompressJs can be downloaded from the CompressJs github repo (https://github.com
 
 
 ###bower
-bower install compressJs --save
+bower install CompressJs --save
 
 ##Demo and Tutorial
 open demo/index.html to see alive example of the library
