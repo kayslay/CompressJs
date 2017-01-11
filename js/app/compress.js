@@ -33,7 +33,7 @@
     //utils
     /**
      *extend's the properties of the target object from the source object
-     *
+     *used for the setting the option of the compress Object
      * @param target {Object} the target to extend
      * @param source {...Object} the sources to extend from
      */
@@ -98,7 +98,10 @@
     };
 
     //endregion
-// sets the event listeners to the input element
+    /**
+     * sets the event listeners for the necessary compress Elements
+     *
+     */
     var setEvent = function () {
         var input = document.querySelectorAll(this.option.inputSelector)[0];
         for (var event in eventListeners) {
@@ -129,7 +132,7 @@
         this.view();
         console.log('compressed file ')
     }
-
+//displays the compressed image in the imageSelector
     function viewImg() {
         document.querySelectorAll(this.option.imageSelector)[0].src = this.compSrc;
     }
@@ -264,7 +267,7 @@
 
     /**
      * compresses the image. makes a call to the createCompressed private method
-     * the creaeCompressed method is called when the FileReader result as loaded
+     * the createCompressed method is called when the FileReader result as loaded
      *
      *
      * @public

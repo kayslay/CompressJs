@@ -1,5 +1,5 @@
 #CompresJs
-CompressJs is a library that compresses png and jpeg images to smaller jpeg images. CompressJs fully supports jpeg image compression, other image file they would be converted to jpeg images.
+CompressJs is a simple library that compresses png and jpeg images to smaller jpeg images. CompressJs fully support's jpeg image compression, other image file they would be converted to jpeg images.
 For PNG images, it compresses but changes the image type to jpeg, and if the file has transparent parts they would be converted to black blank area's.
 For GIF images,  it compresses but changes the image type to jpeg that contains only the first part of the gif
 
