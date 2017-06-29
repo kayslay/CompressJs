@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Compress 0.0.1</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/MDBootstrap/css/mdb.min.css">
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+    </style>
+    <script src="../js/app/compress.js"></script>
+
+
+</head>
+<body>
+<div class="row comp_container">
+
+    <!--Navbar-->
+    <nav class="navbar navbar-dark bg-primary">
+
+        <!-- Collapse button-->
+        <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#collapseEx2">
+            <i class="fa fa-bars"></i>
+        </button>
+
+        <div class="container">
+
+            <!--Collapse content-->
+            <div class="collapse navbar-toggleable-xs" id="collapseEx2">
+                <!--Navbar Brand-->
+                <a class="navbar-brand">CompressJs</a>
+                <!--Links-->
+                <ul class="nav navbar-nav pull-right">
+                    <li class="nav-item active">
+                        <a class="nav-link">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/kayslay/CompressJs" class="nav-link">Docs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/kayslay/" class="nav-link"><span class="fa fa-github fa-lg"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://facebook.com/kayslay/" class="nav-link"><span class="fa fa-facebook fa-lg"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/kayslay/" class="nav-link"><span class="fa fa-twitter fa-lg"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/kayslay/" class="nav-link"><span class="fa fa-google-plus fa-lg"></span></a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.Collapse content-->
+
+        </div>
+
+    </nav>
+    <!--/.Navbar-->
+
+    <div class="card col-sm-12 col-xs-12 col-lg-10 col-md-10 push-lg-1 push-md-1 comp_img_container">
+        <div class="img-con"><img src="" alt="" id="comp_img" class="img-fluid"></div>
+        <div class="btn-group" id="controls">
+            <label class="btn btn-primary" title="select an image (jpeg, png)">
+                <span id="comp_file_selector"><span class="fa fa-image"></span></span>
+                <input type="file" name="file" id="input_cmprss">
+            </label>
+            <a href="" download="file" id="comp_download" class="btn btn-primary">download</a>
+        </div>
+    </div>
+    <div class="card col-sm-12 col-xs-12 col-lg-10 col-md-10 push-lg-1 push-md-1">
+        <div class="card-block rate_container">
+            <input type="range" min="0" max="80" id="comp_rate"></div>
+    </div>
+</div>
+
+
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/tether/dist/js/tether.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/MDBootstrap/js/mdb.min.js"></script>
+
+
+<script>
+
+    var comp = new Compress({
+        changeFn: function (e, file) {
+            comp.compress();
+        },
+        dropFn: function (e, file) {
+            comp.compress();
+        },
+        rateFn: function (e) {
+            var target = e.target;
+            this.option.rate = parseInt(target.value);
+            this.compress();
+        },
+        dropSelector: "#comp_file_selector"
+    });
+    comp.option.downloadSelector = "#comp_download";
+
+
+</script>
+</body>
+</html>
