@@ -7,8 +7,6 @@ const webpack = require('webpack');
 module.exports = {
     entry: {
         index: ['./src/index.js'],
-        worker: ['./src/worker.js'],
-        compress: ['./src/compress.js']
     },
     // plugins: [
     //     new webpack.optimize.CommonsChunkPlugin({

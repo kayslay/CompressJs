@@ -2,23 +2,28 @@
  * Created by kayslay on 6/28/17.
  */
 
-const Compress = (param) => {
-    "use strict";
+const mainCanvas = document.createElement('canvas');
 
-};
-
-const canvas = document.createElement(canvas);
-
-function compress(src, dimension) {
-    const context = canvas.getContext('2d');
-    const img = new Image();
-    //set the img.src
-    img.src = src;
-    //set dimension
-    const width = canvas.width = dimension.width || img.width;
-    const height = canvas.height = dimension.height || img.height;
-    context.drawImage(img, 0, 0, width, height);
-    return (canvas.toDataURL("image/jpeg", (rate / 120)))
+function createImages(filesUrl, dimension) {
+	"use strict";
+	return filesUrl.map(url => {
+		let image = new Image();
+		image.src = url;
+		return {image: image, dimension: Object.assign({}, dimension || {width: image.width, height: image.height})}
+	})
 }
 
-export default Compress
+function compress(image, rate) {
+	const canvas = mainCanvas;
+	const context = canvas.getContext('2d');
+	context.drawImage(image.image,0,0,image.width,image.height);
+	return (canvas.toDataURL("image/jpeg", (rate / 120)));
+}
+
+function compressAll(fileUrl,emitter,{rate,dimension}) {
+	const images = createImages(fileUrl,dimension);
+	emitter.emit("compressed",images.map(image=>compress(image,rate)))
+}
+
+
+

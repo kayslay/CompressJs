@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 #CompresJs
+=======
+# CompresJs
+>>>>>>> 26556aead5436e88cd4f82e1a28d3694541b73d8
 CompressJs is a simple library that compresses png and jpeg images to smaller jpeg images. CompressJs fully support's jpeg image compression, other image file they would be converted to jpeg images.
 For PNG images, it compresses but changes the image type to jpeg, and if the file has transparent parts they would be converted to black blank area's.
 For GIF images,  it compresses but changes the image type to jpeg that contains only the first part of the gif
 
+<<<<<<< HEAD
 ##Dependencies
 CompressJs is not dependent on any script, just use it.
 ##Installation
@@ -16,6 +21,21 @@ bower install CompressJs --save
 open demo/index.html to see alive example of the library
 
 ###Hello World(Quick example)
+=======
+## Dependencies
+CompressJs is not dependent on any script, just use it.
+## Installation
+CompressJs can be downloaded from the CompressJs github repo (https://github.com/kayslay/CompressJs).
+
+
+### bower
+bower install CompressJs --save
+
+## Demo and Tutorial
+open demo/index.html to see alive example of the library
+
+### Hello World(Quick example)
+>>>>>>> 26556aead5436e88cd4f82e1a28d3694541b73d8
 create a javascript file . let's say main.js.
 _main.js_
 ```javascript
@@ -50,12 +70,20 @@ _main.js_
  ```
 Then run the index file on your browser. It's that easy
 
+<<<<<<< HEAD
 ##Compress.option
+=======
+## Compress.option
+>>>>>>> 26556aead5436e88cd4f82e1a28d3694541b73d8
 
 The Compress option is the configuration of the Compress Object instance. the Compress.optionis an Object Literal that contains properties
 used to set the behaviour of the Compress.
 
+<<<<<<< HEAD
 ###The Properties of Compress.option
+=======
+### The Properties of Compress.option
+>>>>>>> 26556aead5436e88cd4f82e1a28d3694541b73d8
 
  - **inputSelector** :: this is the selector of the input element thst selects the image.
  - **downloadSelector** :: this is the selector of the link that would be used to download the compressed image. downloadSelector must be set on creation of the Compress Object.
