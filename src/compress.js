@@ -4,26 +4,54 @@
 
 const mainCanvas = document.createElement('canvas');
 
-function createImages(filesUrl, dimension) {
-	"use strict";
+/**
+ * @description creates an array of images and set their dimensions
+ * @param {[String]} filesUrl
+ * @param {Emitter} emitter
+ * @param {Object} dimension
+ */
+function createImages(filesUrl, emitter, dimension = {}) {
+	let Images = [];
+	let count = 0;
 	return filesUrl.map(url => {
 		let image = new Image();
 		image.src = url;
-		return {image: image, dimension: Object.assign({}, dimension || {width: image.width, height: image.height})}
+		image.onload = () => {
+			Images.push({img: image, dimension: Object.assign({}, {width: image.width, height: image.height}, dimension)});
+			if (count === 0) {
+				emitter.emit('ImageCreated', Images)
+			}
+		}
+
 	})
 }
 
-function compress(image, rate) {
-	const canvas = mainCanvas;
-	const context = canvas.getContext('2d');
-	context.drawImage(image.image,0,0,image.width,image.height);
-	return (canvas.toDataURL("image/jpeg", (rate / 120)));
+/**
+ * @description the place where the compression work is done
+ * @param {{img:Image,dimension:{}} image
+ * @param {Number} rate
+ * @returns {string}
+ */
+export function compress(image, rate) {
+	const context = mainCanvas.getContext('2d');
+	mainCanvas.width = image.dimension.width;
+	mainCanvas.height = image.dimension.height;
+	context.drawImage(image.img, 0, 0, image.dimension.width, image.dimension.height);
+	return mainCanvas.toDataURL("image/jpeg", rate/100);
 }
 
-function compressAll(fileUrl,emitter,{rate,dimension}) {
-	const images = createImages(fileUrl,dimension);
-	emitter.emit("compressed",images.map(image=>compress(image,rate)))
+/**
+ * @description start the compression
+ * @param {String} fileUrl
+ * @param {Emitter } emitter
+ * @param {Object}dimension
+ */
+export default function compressAll(fileUrl, emitter, {dimension}) {
+	emitter.emit('compressing'); // notify loaders that are interested in knowing when the compression starts
+
+	createImages(fileUrl, emitter, dimension);
 }
+
 
 
 

@@ -93,43 +93,164 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function Compress(options) {
 	var defaultOptions = {
-		inputSelector: '#input_cmprss',
-		downloadSelector: '#comp_download',
-		imageSelector: '#comp_img',
-		changeFn: null,
-		dropFn: null,
-		dropSelector: null,
 		rate: 50,
 		imagePrefix: 'compressed-',
-		dimen: null,
-		compressFn: null,
-		rateSelector: '#comp_rate',
-		rateEvent: 'change',
-		rateFn: null
+		name: "image"
 	};
 
 	var option = Object.assign({}, defaultOptions, options);
 
-	var inputElem = Array.from(document.querySelectorAll(option.inputSelector));
-	var dropElem = Array.from(document.querySelectorAll(option.dropSelector));
+	var currentFiles = []; //holds the original images data url
+	var compressedURLs = []; //holds the compressed images data url
+
+	var inputElem = option.inputSelector ? setElems(option.inputSelector, 'change') : null;
+	//set the dropElement
+	var dropElem = option.dropSelector ? setElems(option.dropSelector, 'drop') : null;
+	setDropElem(dropElem);
+
+	var rateElem = option.rateSelector ? setRateElems(option.rateSelector, 'change') : null;
+
+	var downloadElem = option.downloadSelector ? document.querySelector(option.downloadSelector) : null;
+	downloadElem.addEventListener('click', download);
+	var link = null;
+
 	var emitter = new _emitter2.default();
 
-	inputElem.forEach(function (el) {
-		"use strict";
-
-		el.addEventListener('change', function (ev) {
-			(0, _file2.default)(ev, emitter, { rate: option.rate, dimension: option.dimen });
-		});
+	//SET THE EVENTS
+	//compress the images on startCompression
+	emitter.on('startCompression', _compress2.default);
+	//set the current files when the files have been saved
+	emitter.on('saveFileUrl', function (files) {
+		currentFiles = files;
 	});
-	dropElem.forEach(function (el) {
-		"use strict";
-
-		el.addEventListener('dr', function (ev) {
-			(0, _file2.default)(ev, emitter, { rate: option.rate, dimension: option.dimen });
+	//compress the images have been created
+	emitter.on('ImageCreated', function (images) {
+		var compressedImg = images.map(function (image) {
+			return (0, _compress.compress)(image, option.rate);
 		});
+		emitter.emit("compressed", compressedImg); // for the compression to start
 	});
+	//set compressedURLs and the image src when the compression is finished
+	emitter.on("compressed", function (compressedSrc) {
+		if (option.imageSelector) {
+			document.querySelector(option.imageSelector).src = compressedSrc[0];
+		}
+		compressedURLs = compressedSrc;
+	});
+
+	//SET THE EVENTS
+
+	/**
+  * @description adds events to the selector elements
+  * handles selectors that return multiple elements too.
+  * Why this function? the functions meant to make it easily to change/ add support for multiple selectors
+  *
+  * @param {String} selector
+  * @param {String} eventName
+  * @param {Boolean} single
+  * @returns {Element[]|Element}
+  */
+	function setElems(selector, eventName) {
+		var single = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+
+		var elem = single ? document.querySelector(selector) : Array.from(document.querySelectorAll(selector));
+
+		if (Array.isArray(elem)) {
+			elem.forEach(function (el) {
+				addListeners(el, eventName, function (ev) {
+					(0, _file2.default)(ev, emitter, { rate: option.rate, dimension: option.dimen });
+				});
+			});
+		} else {
+			addListeners(elem, eventName, function (ev) {
+				(0, _file2.default)(ev, emitter, { rate: option.rate, dimension: option.dimen });
+			});
+		}
+		return elem;
+	}
+
+	/**
+  * @description adds events to the rateElem.
+  * @param {String} selector
+  * @param {String} eventName
+  * @param {Boolean} single
+  * @returns {Element[]|Element}
+  */
+	function setRateElems(selector, eventName) {
+		var single = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+
+		var elem = single ? document.querySelector(selector) : Array.from(document.querySelectorAll(selector));
+
+		if (Array.isArray(elem)) {
+			elem.forEach(function (el) {
+				addListeners(el, eventName, function (ev) {
+					option.rate = parseInt(ev.target.value);
+					emitter.emit('startCompression', currentFiles, emitter, { rate: option.rate, dimension: option.dimen });
+				});
+			});
+		} else {
+			addListeners(elem, eventName, function (ev) {
+				option.rate = parseInt(ev.target.value);
+				emitter.emit('startCompression', currentFiles, emitter, { rate: option.rate, dimension: option.dimen });
+			});
+		}
+		return elem;
+	}
+
+	/**
+  * @description adds events
+  * @param {Element} el
+  * @param {String} eventName
+  * @param {function} cb
+  */
+	function addListeners(el, eventName, cb) {
+		el.addEventListener(eventName, function (ev) {
+			ev.preventDefault();
+			ev.stopPropagation();
+			cb(ev);
+		});
+	}
+
+	/**
+  * @description adds events to the dropElem.
+  * @param {Element} dropElem
+  */
+	function setDropElem(dropElem) {
+		if (dropElem) {
+			dropElem.addEventListener('dragenter', function (e) {
+				e.preventDefault();
+				console.log('drag entered');
+			});
+
+			dropElem.addEventListener('dragover', function (e) {
+				e.preventDefault();
+				console.log('drag entered');
+			});
+
+			dropElem.addEventListener('dragleave', function (e) {
+				e.preventDefault();
+				console.log('drag entered');
+			});
+		}
+	}
+
+	/**
+  * @description used to download the compressed images
+  * @param {Event} ev
+  */
+	function download(ev) {
+		ev.preventDefault();
+		ev.stopPropagation();
+		var a = link = link || document.createElement('a');
+		a.download = option.imagePrefix + option.name.replace(/\..+/, '');
+		a.href = compressedURLs[0];
+		a.click();
+	}
 
 	return {
+		options: option,
 		on: function on(eventName, callback) {
 			emitter.on(eventName, callback);
 		}
@@ -191,10 +312,10 @@ exports.default = function (e, emitter) {
 };
 
 /**
- *
+ * @description gets the file from the input.files or the dragged dataTransfer.files
  * @param {Event} e
  * @param {Emitter} emitter
- * @returns {Array}
+ * @returns {File[]}
  */
 function getFile(e, emitter) {
 	var files = Array.from(e.target.files || e.dataTransfer.files);
@@ -204,12 +325,10 @@ function getFile(e, emitter) {
 	return files;
 }
 
-//todo: is there a need to convert it to a arraybuffer or just use the url directly
-//todo: add support for multiple images
 /**
- *
- * @param files
- * @param emitter
+ * @description gets the data url of the images uploaded
+ * @param {File[]} files
+ * @param {Emitter} emitter
  */
 function getImageUrl(files, emitter) {
 	for (var _len = arguments.length, extra = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
@@ -219,13 +338,16 @@ function getImageUrl(files, emitter) {
 	var reader = new FileReader();
 	var count = 0;
 	var filesUrl = [];
+
 	reader.onload = function () {
 		count--;
 		filesUrl.push(reader.result);
 		if (count === 0) {
-			emitter.emit.apply(emitter, ['readImageUrl', filesUrl, emitter].concat(extra));
+			emitter.emit('saveFileUrl', filesUrl);
+			emitter.emit.apply(emitter, ['startCompression', filesUrl, emitter].concat(extra)); // for the compression to start
 		}
 	};
+
 	files.forEach(function (file) {
 		count++;
 		reader.readAsDataURL(file);
@@ -254,6 +376,9 @@ var Emitter = function () {
 		this._events = {};
 	}
 
+	//event listener
+
+
 	_createClass(Emitter, [{
 		key: "on",
 		value: function on(eventName, callback) {
@@ -261,6 +386,9 @@ var Emitter = function () {
 			event[eventName] = event[eventName] || [];
 			event[eventName].push(callback);
 		}
+
+		//fire the event
+
 	}, {
 		key: "emit",
 		value: function emit(eventName) {
@@ -289,39 +417,68 @@ exports.default = Emitter;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.compress = compress;
+exports.default = compressAll;
 /**
  * Created by kayslay on 6/28/17.
  */
 
 var mainCanvas = document.createElement('canvas');
 
-function createImages(filesUrl, dimension) {
-	"use strict";
+/**
+ * @description creates an array of images and set their dimensions
+ * @param {[String]} filesUrl
+ * @param {Emitter} emitter
+ * @param {Object} dimension
+ */
+function createImages(filesUrl, emitter) {
+	var dimension = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
+	var Images = [];
+	var count = 0;
 	return filesUrl.map(function (url) {
 		var image = new Image();
 		image.src = url;
-		return { image: image, dimension: Object.assign({}, dimension || { width: image.width, height: image.height }) };
+		image.onload = function () {
+			Images.push({ img: image, dimension: Object.assign({}, { width: image.width, height: image.height }, dimension) });
+			if (count === 0) {
+				emitter.emit('ImageCreated', Images);
+			}
+		};
 	});
 }
 
+/**
+ * @description the place where the compression work is done
+ * @param {{img:Image,dimension:{}} image
+ * @param {Number} rate
+ * @returns {string}
+ */
 function compress(image, rate) {
-	var canvas = mainCanvas;
-	var context = canvas.getContext('2d');
-	context.drawImage(image.image, 0, 0, image.width, image.height);
-	return canvas.toDataURL("image/jpeg", rate / 120);
+	var context = mainCanvas.getContext('2d');
+	mainCanvas.width = image.dimension.width;
+	mainCanvas.height = image.dimension.height;
+	context.drawImage(image.img, 0, 0, image.dimension.width, image.dimension.height);
+	return mainCanvas.toDataURL("image/jpeg", rate / 100);
 }
 
+/**
+ * @description start the compression
+ * @param {String} fileUrl
+ * @param {Emitter } emitter
+ * @param {Object}dimension
+ */
 function compressAll(fileUrl, emitter, _ref) {
-	var rate = _ref.rate,
-	    dimension = _ref.dimension;
+	var dimension = _ref.dimension;
 
-	var images = createImages(fileUrl, dimension);
-	emitter.emit("compressed", images.map(function (image) {
-		return compress(image, rate);
-	}));
+	emitter.emit('compressing'); // notify loaders that are interested in knowing when the compression starts
+
+	createImages(fileUrl, emitter, dimension);
 }
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=compressjs.js.map

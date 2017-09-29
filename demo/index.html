@@ -11,7 +11,6 @@
     <style>
 
     </style>
-    <script src="../dist/index.js"></script>
 
 
 </head>
@@ -44,13 +43,15 @@
                         <a href="https://github.com/kayslay/" class="nav-link"><span class="fa fa-github fa-lg"></span></a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://facebook.com/kayslay/" class="nav-link"><span class="fa fa-facebook fa-lg"></span></a>
+                        <a href="https://facebook.com/kayslay/" class="nav-link"><span
+                                class="fa fa-facebook fa-lg"></span></a>
                     </li>
                     <li class="nav-item">
                         <a href="https://github.com/kayslay/" class="nav-link"><span class="fa fa-twitter fa-lg"></span></a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://github.com/kayslay/" class="nav-link"><span class="fa fa-google-plus fa-lg"></span></a>
+                        <a href="https://github.com/kayslay/" class="nav-link"><span
+                                class="fa fa-google-plus fa-lg"></span></a>
                     </li>
                 </ul>
             </div>
@@ -83,11 +84,29 @@
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../bower_components/MDBootstrap/js/mdb.min.js"></script>
 
-
+<script src="../dist/compressjs.js"></script>
 <script>
 
-    var comp = Compress({})
-comp.on('changed',(files)=>console.log(files))
+	let comp = Compress({
+		inputSelector: '#input_cmprss',
+		downloadSelector: '#comp_download',
+		imageSelector: '#comp_img',
+		dropSelector: ".img-con",
+		rate: 100,
+		imagePrefix: 'compressed-',
+		dimen: null,
+		rateSelector: '#comp_rate',
+	});
+	comp.on('compressed', (files) => {
+		console.group('compressed images data url');
+		console.log('this array contains the url for the compressed images');
+		console.log(files);
+		console.log('listen to the compressed event to get the array');
+		console.groupEnd();
+	});
+
+	comp.on('compressing', () => console.log('compressing'))
+
 
 </script>
 </body>

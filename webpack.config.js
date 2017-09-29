@@ -8,11 +8,7 @@ module.exports = {
     entry: {
         index: ['./src/index.js'],
     },
-    // plugins: [
-    //     new webpack.optimize.CommonsChunkPlugin({
-    //         name: ['commons','compress','bootstrap']
-    //     })
-    // ],
+//Todo: compress js file
     module: {
         loaders: [{
             test: /\.js$/,
@@ -23,7 +19,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist'),
         publicPath: '/dists/',
-        filename: '[name].js'
+        filename: 'compressjs.js'
     },
     devtool: "source-map"
 };

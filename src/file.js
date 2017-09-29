@@ -1,8 +1,8 @@
 /**
- *
+ * @description gets the file from the input.files or the dragged dataTransfer.files
  * @param {Event} e
  * @param {Emitter} emitter
- * @returns {Array}
+ * @returns {File[]}
  */
 function getFile(e, emitter) {
 	const files = Array.from(e.target.files || e.dataTransfer.files);
@@ -12,24 +12,26 @@ function getFile(e, emitter) {
 	return files
 }
 
-//todo: is there a need to convert it to a arraybuffer or just use the url directly
-//todo: add support for multiple images
 /**
- *
- * @param files
- * @param emitter
+ * @description gets the data url of the images uploaded
+ * @param {File[]} files
+ * @param {Emitter} emitter
  */
 function getImageUrl(files, emitter, ...extra) {
 	const reader = new FileReader();
 	let count = 0;
 	let filesUrl = [];
+
 	reader.onload = function () {
 		count--;
 		filesUrl.push(reader.result);
 		if (count === 0) {
-			emitter.emit('readImageUrl', filesUrl, emitter, ...extra)
+			emitter.emit('saveFileUrl',filesUrl);
+			emitter.emit('startCompression', filesUrl, emitter, ...extra) // for the compression to start
 		}
 	};
+
+
 	files.forEach(file => {
 		count++;
 		reader.readAsDataURL(file)

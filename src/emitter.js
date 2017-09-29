@@ -1,19 +1,21 @@
-export default class Emitter{
+export default class Emitter {
 
-	constructor(){
+	constructor() {
 		this._events = {}
 	}
 
-	on(eventName, callback){
+//event listener
+	on(eventName, callback) {
 		const event = this._events;
 		event[eventName] = event[eventName] || [];
 		event[eventName].push(callback);
 	}
 
-	emit(eventName,...args){
-		const event = this._events
-		if(!(eventName in event)) return false
+//fire the event
+	emit(eventName, ...args) {
+		const event = this._events;
+		if (!(eventName in event)) return false;
 
-		event[eventName].forEach(cb=>cb(...args))
+		event[eventName].forEach(cb => cb(...args))
 	}
 }
