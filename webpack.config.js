@@ -8,7 +8,11 @@ module.exports = {
     entry: {
         index: ['./src/index.js'],
     },
-//Todo: compress js file
+	plugins: [
+		new webpack.optimize.UglifyJsPlugin({
+			compress: { warnings: false }
+		})
+	],
     module: {
         loaders: [{
             test: /\.js$/,
