@@ -17,7 +17,7 @@ CompressJs can be downloaded from the CompressJs github repo (https://github.com
 
 #### npm
 
-        $ npm install CompressJs --save
+        $ npm install compress-js --save
       
 
 ## Demo and Tutorial

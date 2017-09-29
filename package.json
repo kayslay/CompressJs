@@ -1,5 +1,5 @@
 {
-  "name": "CompressJs",
+  "name": "compress-js",
   "version": "2.0.0",
   "description": "CompressJs is a simple library that compresses png and jpeg images to smaller jpeg images.",
   "main": "compress.js",
