@@ -1,100 +1,92 @@
-<<<<<<< HEAD
-#CompresJs
-=======
+
 # CompresJs
->>>>>>> 26556aead5436e88cd4f82e1a28d3694541b73d8
-CompressJs is a simple library that compresses png and jpeg images to smaller jpeg images. CompressJs fully support's jpeg image compression, other image file they would be converted to jpeg images.
-For PNG images, it compresses but changes the image type to jpeg, and if the file has transparent parts they would be converted to black blank area's.
-For GIF images,  it compresses but changes the image type to jpeg that contains only the first part of the gif
 
-<<<<<<< HEAD
-##Dependencies
-CompressJs is not dependent on any script, just use it.
-##Installation
-CompressJs can be downloaded from the CompressJs github repo (https://github.com/kayslay/CompressJs).
+CompressJs is a simple library that compresses png and jpeg images to smaller jpeg images. Compress make use of the Canvas element internally for 
+compressing the images. 
 
 
-###bower
-bower install CompressJs --save
-
-##Demo and Tutorial
-open demo/index.html to see alive example of the library
-
-###Hello World(Quick example)
-=======
 ## Dependencies
 CompressJs is not dependent on any script, just use it.
+
 ## Installation
 CompressJs can be downloaded from the CompressJs github repo (https://github.com/kayslay/CompressJs).
 
+#### bower
 
-### bower
-bower install CompressJs --save
+        $ bower install CompressJs --save
+
+#### npm
+
+        $ npm install CompressJs --save
+      
 
 ## Demo and Tutorial
 open demo/index.html to see alive example of the library
 
-### Hello World(Quick example)
->>>>>>> 26556aead5436e88cd4f82e1a28d3694541b73d8
-create a javascript file . let's say main.js.
-_main.js_
-```javascript
-       
-//run the default fn
-    var comp = new Compress({
-        changeFn: function (e, file) {
-            comp.compress();
-        },
-        rateSelector: "#slider",
-        rateFn: function (e) {
-            var target = e.target;
-            this.option.rate = parseInt(target.value)
-            this.compress();
-        }
-    });
-    comp.option.downloadSelector = "#comp_download"; // set the downolad button selector
-```
-        
- _index.html_
+### Usage
+
+#### HTML
 
  ```html
-
- <div id="first_test">
-     <img src="" alt="" id="img">
-     <input type="file" name="file" id="input_cmprss">
-     <a href="" download="file" id="comp_download">download</a>
-     <input type="range" min="0" max="10" id="slider">
-
- </div>
-     <script src="../js/app/compress.js"></script>
+  <script src="../dist/compressjs.js"></script>
  ```
-Then run the index file on your browser. It's that easy
+#### JAVASCRIPT
 
-<<<<<<< HEAD
-##Compress.option
-=======
-## Compress.option
->>>>>>> 26556aead5436e88cd4f82e1a28d3694541b73d8
+```javascript
+let comp = Compress({
+		inputSelector: '#input_cmprss',
+		downloadSelector: '#comp_download',
+		imageSelector: '#comp_img',
+		dropSelector: ".img-con",
+		rate: 100,
+		imagePrefix: 'compressed-',
+		dimen: null,
+		rateSelector: '#comp_rate',
+	});
+	comp.on('compressed', (files) => {
+		console.group('compressed images data url');
+		console.log('this array contains the url for the compressed images');
+		console.log(files);
+		console.log('listen to the compressed event to get the array');
+		console.groupEnd();
+	});
 
-The Compress option is the configuration of the Compress Object instance. the Compress.optionis an Object Literal that contains properties
-used to set the behaviour of the Compress.
+	comp.on('compressing', () => console.log('compressing'))
 
-<<<<<<< HEAD
-###The Properties of Compress.option
-=======
+```
+The Compress function returns an Object. The Obejct returned by the Compress function contains two properties:
+#### options: 
+The option give you the ability to get and set the Compress.options
+
+#### on:
+The `on`  methods adds a listener to an event fired by Compress.
+
+The events that can be emitted by Compressjs:
+- **startCompression :** fired to start the compression. the `listener` takes three arguments:
+
+    - fileUrl `{String[]}`: An array of the data urls for the original images dropped or inputted.
+    - emitter `{Emitter}` : This Object manages the event emitting and listening.
+    - {dimension} `{dimension:{width:Number,height:{Number}}}`: an Object containing a dimension property.
+    
+- **saveFileUrl :** fired to save the original data url of the images added. the `listener` takes an argument:
+
+    - fileUrl `{String[]}`: An array of the data urls for the original images dropped or inputted.
+- **compressed :** fired when the images have been compressed. the `listener` takes an argument:
+    - compressedImgs `{String[]}`: An array of the data urls for the compress imagesg.
+
+
+
+## Compress.options
+
+The Compression
+
 ### The Properties of Compress.option
->>>>>>> 26556aead5436e88cd4f82e1a28d3694541b73d8
 
- - **inputSelector** :: this is the selector of the input element thst selects the image.
- - **downloadSelector** :: this is the selector of the link that would be used to download the compressed image. downloadSelector must be set on creation of the Compress Object.
+ - **inputSelector** :: this is the selector of the input element that selects the image.
+ - **downloadSelector** :: this is the selector of the link that would be used to download the compressed image.
  - **imageSelector** :: this is the selector for the img tag that's used to preview the compressed image.
- - **changeFn** :: the function to be called when the input is changed.
- - **dropFn**  :: the function to be called when there is a drop on the input o the dropSelector.
- - **dropSelector** :: the selector of the elemnt to drop the image for compression.
+ - **dropSelector** :: the selector of the element to drop the image for compression.
  - **rate** :: the default rate at which the image is compressed. the lower the rate the higher the compression.
  - **imagePrefix** :: the prefix to the name of the compressed file when downloaded.
  - **dimen**: : an object literal holding the width and height of the compressed image.
- - **compressFn** :: the function to be called as soon as comression is complete
- - **rateSelector** :: the selctor of the element used to control the rate of compression
- - **rateEvent** :: the event fired that call the rateFn
- - **rateFn** :: the function that changes the rate of the compression
+ - **rateSelector** :: the selector of the element used to control the rate of compression
