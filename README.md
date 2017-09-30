@@ -21,7 +21,8 @@ CompressJs can be downloaded from the CompressJs github repo (https://github.com
       
 
 ## Demo and Tutorial
-open demo/index.html to see alive example of the library
+check out [demo](https://kayslay.github.io/CompressJs/demo) or open demo/index.html to see alive example of the library
+
 
 ### Usage
 
