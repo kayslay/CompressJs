@@ -1,6 +1,6 @@
 {
   "name": "compress-js",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "CompressJs is a simple library that compresses png and jpeg images to smaller jpeg images.",
   "main": "compress.js",
   "scripts": {
